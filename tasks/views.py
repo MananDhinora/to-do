@@ -3,7 +3,6 @@ from .models import Task
 
 
 def home(request):
-    # task = Task.objects.all()
     return render(request, "index.html", {"tasks": Task.objects.all()})
 
 def remaining_task(request):
@@ -29,9 +28,21 @@ def add_task(request):
 def completed_task(request):
     return render(request, "completed.html",{"tasks": Task.objects.filter(completed=True)})
 
-def delete_task(request):
-    return render(request, "delete.html")
+def delete_task(request, task_id):
+    return render(request, "delete.html", {"task": Task.objects.get(id=task_id)})
 
 def task_detail(request, task_id):
-    return render(request, "task_detail.html", {"tasks": Task.objects.get(task_id)})
+    return render(request, "task_detail.html", {"task": Task.objects.get(id=task_id)})
+
+def toggle_complete(request, task_id):
+    task = Task.objects.get(id=task_id)
+    if task:
+        task.completed = not task.completed
+        task.save()
+        return redirect("/")
+
+def remove_task(request, task_id):
+    task = Task.objects.get(id=task_id)
+    task.delete()
+    return redirect("/")
 
