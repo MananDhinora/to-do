@@ -22,7 +22,7 @@ def add_task(request):
                     due_date=due_date,
                     due_time=due_time)
             task.save()
-            return redirect("/")
+            return redirect("remaining")
     return render(request, "add_task.html")
 
 def completed_task(request):
@@ -39,10 +39,10 @@ def toggle_complete(request, task_id):
     if task:
         task.completed = not task.completed
         task.save()
-        return redirect("/")
+        return redirect(request.META.get("HTTP_REFERER"))
 
 def remove_task(request, task_id):
     task = Task.objects.get(id=task_id)
     task.delete()
-    return redirect("/")
+    return redirect(request.META.get("HTTP_REFERER"))
 

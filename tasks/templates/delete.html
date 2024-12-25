@@ -58,7 +58,7 @@
         <!-- Bottom: Time and Date | Delete -->
         <div class="flex flex-row justify-around">
           <a
-              href="{% request.META.HTTP_REFERER %}"
+              href="{{ request.META.HTTP_REFERER }}"
             class="py-1 px-2 bg-blue-600 rounded-xl flex items-center gap-1 text-white font-semibold"
             ><i class="bx bxs-left-arrow-circle"></i> Go Back</a
           >
